@@ -3,7 +3,7 @@
 
 
 // Configurações da rede WIFI
-#define WIFI_SSID "Bonas"
+#define WIFI_SSID ""
 #define WIFI_PASS ""
 
 // Autenticação Adafruit IO
