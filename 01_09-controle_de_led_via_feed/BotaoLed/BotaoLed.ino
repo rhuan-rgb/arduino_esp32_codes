@@ -19,13 +19,14 @@ NewPing sonar(TRIG_PIN, ECHO_PIN, MAX_DISTANCE);
 
 // Autenticação Adafruit IO
 #define IO_USERNAME "Rhuan_IOT"
-#define IO_KEY "aio_nEDJ09zXD8lKQVvkqABmOIGB05Gj"
+#define IO_KEY "aio_ZHeY384STUqSUMPwNO4N01KJvOxz"
 
 AdafruitIO_WiFi io(IO_USERNAME, IO_KEY, WIFI_SSID, WIFI_PASS);
 
 #define pinLed 14  //Pino do LED
 
 AdafruitIO_Feed *botaoalarme = io.feed("botaoalarme");
+AdafruitIO_Feed *distanciaultrassom = io.feed("distanciaultrassom");
 
 // Variáveis de controle
 bool alarmeAtivo = false;
@@ -90,6 +91,11 @@ void loop() {
   Serial.println(distancia);
   Serial.print(" cm");
 
+  if(distancia != 0){
+    // só envia distancias válidas
+  distanciaultrassom -> save(distancia);
+  }
+
   //ativação ou desativação do alarme
   if(alarmeAtivo && distancia > 0 && distancia < LIMITE_DISTANCIA) {
     ativarAlerta();
@@ -104,5 +110,5 @@ void loop() {
   // Serial.println(sonar.ping_cm());
   // delay(500);
 
-  // delay(3000);
+  delay(3000); // intervalo ideal para a Adafruit
 }
